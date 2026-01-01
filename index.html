@@ -12,63 +12,60 @@ body {
     font-family:'Poppins',sans-serif;
     background:#000;
     color:#fff;
-    min-height:100vh;
+    height:100vh;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     text-align:center;
     overflow:hidden;
-    animation:fadeIn 1.3s ease-in-out;
+    animation:fadeIn 1.2s ease-in-out;
 }
 
-/* Fade in */
-@keyframes fadeIn {
-    from {opacity:0;} to {opacity:1;}
-}
+/* Fade in animation */
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 
-/* Matrix Background */
+/* Matrix Hacker Rain Background */
 .matrix {
     position:fixed;
-    top:0;left:0;width:100%;height:100%;
-    z-index:-2;
+    top:0;left:0;
+    width:100%;height:100%;
+    z-index:-3;
     background:#000;
+    overflow:hidden;
 }
-.matrix::before {
-    content:"101001 001101 101 010 111 000  101001 001101 101010 111 000 010010 110010 101010 011 110 010";
+.matrix span {
     position:absolute;
-    top:-100%;
-    left:0;
-    width:200%;
-    font-size:17vw;
+    top:-10%;
+    width:100%;
+    font-size:18px;
     color:#00ff55;
-    opacity:.17;
-    animation:matrixScroll 18s linear infinite;
+    opacity:.6;
     white-space:nowrap;
+    animation:rain 1.2s linear infinite;
 }
-@keyframes matrixScroll {
-    from { transform:translateY(0); }
-    to   { transform:translateY(200%); }
+@keyframes rain {
+    from { transform: translateY(-100%); }
+    to   { transform: translateY(200%); }
 }
 
+/* Title glitch */
 h1 {
     font-size:3.2rem;
     font-weight:800;
-    text-shadow:0 0 12px #00ff55, 0 0 25px #009933;
+    text-shadow:0 0 12px #00ff55, 0 0 25px #00ff55;
     animation:glitch 2s infinite;
 }
-
 @keyframes glitch {
-    0% { text-shadow:0 0 10px #00ff55; }
-    50%{ text-shadow:0 0 24px #00ff55; }
-    100%{ text-shadow:0 0 10px #00ff55; }
+    0% { opacity:1; text-shadow:0 0 10px #00ff55; }
+    50%{ opacity:.8; text-shadow:0 0 22px #00ff55; }
+    100%{ opacity:1; text-shadow:0 0 10px #00ff55; }
 }
 
-p {
-    opacity:.7;
-    margin-bottom:20px;
-}
+/* Description */
+p { opacity:.7; margin-bottom:18px; }
 
+/* Buttons */
 .btn {
     text-decoration:none;
     background:rgba(255,255,255,.1);
@@ -84,54 +81,60 @@ p {
     transition:.25s;
 }
 .btn:hover {
-    transform:scale(1.08);
+    transform:scale(1.1);
     background:rgba(255,255,255,.25);
 }
 
 .icon {
-    width:32px;height:32px;border-radius:6px;object-fit:cover;
+    width:32px;
+    height:32px;
+    border-radius:6px;
+    object-fit:cover;
 }
 
-/* Spotify Player */
+/* Spotify */
 .player {
-    margin-top:28px;
+    margin-top:25px;
     width:90%;
     max-width:480px;
 }
 
-/* Footer text */
 footer {
     position:fixed;
     bottom:10px;
-    font-size:.8rem;
     opacity:.3;
+    font-size:.8rem;
+    width:100%;
+    text-align:center;
 }
 </style>
 </head>
 
 <body>
 
+<!-- Background -->
 <div class="matrix"></div>
 
+<!-- Content -->
 <h1>DERITMZX</h1>
-<p>Welcome to the Hacker Dark Zone</p>
+<p>Welcome to the Hacker Zone</p>
 
 <a class="btn" href="https://www.instagram.com/ducky5.jpeg/" target="_blank">
-   <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg">
-   Instagram: @deritmzx
+  <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg">
+  Instagram: @deritmzx
 </a>
 
 <a class="btn" href="https://www.roblox.com/users/VINANDCAT/profile" target="_blank">
-   <img class="icon" src="https://img2.pic.in.th/c4c28132e4907f73ea0430d18d769c06276e39cc.png">
-   Roblox: VINANDCAT
+  <img class="icon" src="https://img2.pic.in.th/c4c28132e4907f73ea0430d18d769c06276e39cc.png">
+  Roblox: VINANDCAT
 </a>
 
 <a class="btn" href="https://discord.com/users/deritmzx" target="_blank">
-   <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png">
-   Discord: deritmzx
+  <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png">
+  Discord: deritmzx
 </a>
 
-<!-- Spotify Embed -->
+<!-- Spotify Player -->
 <div class="player">
 <iframe style="border-radius:12px"
 src="https://open.spotify.com/embed/track/3p4hRhMcb6ch8OLtATMaLw?utm_source=generator"
@@ -141,6 +144,19 @@ loading="lazy"></iframe>
 </div>
 
 <footer>© 2026 DERITMZX • Hacker Edition</footer>
+
+<!-- Rain Generator -->
+<script>
+const matrix = document.querySelector('.matrix');
+const chars = "01 10 0011 010 110 001 101 1001 0101 1110 01 010 10 01 ";
+for(let i=0;i<50;i++){
+  let row = document.createElement("span");
+  row.style.left = Math.random()*100 + "%";
+  row.style.animationDelay = Math.random()*1 + "s";
+  row.textContent = chars.repeat(20);
+  matrix.appendChild(row);
+}
+</script>
 
 </body>
 </html>
