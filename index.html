@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>deritmzx • Red Demon</title>
 
-<!-- Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
 
 <style>
@@ -56,7 +55,7 @@ h1 {
 /* Link Buttons */
 .link-btn {
   width: 92%;
-  max-width: 360px;
+  max-width: 380px;
   background: rgba(255, 0, 47, .2);
   border: 1px solid rgba(255, 0, 47, .4);
   padding: 14px;
@@ -65,8 +64,8 @@ h1 {
   margin: 6px 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  justify-content: flex-start;
+  gap: 14px;
   text-decoration: none;
   color: white;
   transition: .25s;
@@ -76,6 +75,11 @@ h1 {
   transform: scale(1.05);
   background: rgba(255, 0, 47, .32);
   box-shadow: 0 0 18px #ff002f;
+}
+.link-btn img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
 }
 
 /* Spotify */
@@ -87,17 +91,16 @@ h1 {
   overflow: hidden;
 }
 
-/* Floating background embers */
+/* Floating embers BG */
 .bg {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(circle at center, rgba(255,0,47,.3), #000 70%);
+  background: radial-gradient(circle at center, rgba(255,0,47,.25), #000 75%);
 }
 .ember {
   position: fixed;
-  width: 5px;
-  height: 5px;
+  width: 6px; height: 6px;
   background: #ff002f;
   border-radius: 50%;
   opacity: .8;
@@ -115,7 +118,7 @@ h1 {
 <div class="bg"></div>
 
 <script>
-/* Create floating particles */
+/* floating sparks */
 for(let i=0;i<40;i++){
   let d=document.createElement("div");
   d.className="ember";
@@ -127,9 +130,10 @@ for(let i=0;i<40;i++){
 </script>
 
 <div class="container">
+
   <!-- Avatar -->
   <div class="avatar-box">
-    <img src="https://cdn.pic.in.th/file/picinth/fd603867-c305-4545-9fd1-68ee84f9967e.png" alt="profile" />
+    <img src="https://img5.pic.in.th/file/secure-sv1/fd603867-c305-4545-9fd1-68ee84f9967e.png" alt="profile" />
   </div>
 
   <!-- Name -->
@@ -137,9 +141,17 @@ for(let i=0;i<40;i++){
   <div class="bio">Thailand | 16 | Roblox & Hacker</div>
 
   <!-- Links -->
-  <a class="link-btn" href="https://instagram.com/ducky5.jpeg" target="_blank">Instagram</a>
-  <a class="link-btn" href="https://www.roblox.com/users/8183436850/profile" target="_blank">Roblox Profile</a>
-  <a class="link-btn" href="https://discordapp.com/users/848073028474765332" target="_blank">Discord</a>
+  <a class="link-btn" href="https://instagram.com/ducky5.jpeg" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg"> Instagram
+  </a>
+
+  <a class="link-btn" href="https://www.roblox.com/users/8183436850/profile" target="_blank">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/roblox.png"> Roblox Profile
+  </a>
+
+  <a class="link-btn" href="https://discordapp.com/users/848073028474765332" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"> Discord
+  </a>
 
   <!-- Spotify -->
   <div class="spotify-box">
@@ -147,6 +159,7 @@ for(let i=0;i<40;i++){
       width="100%" height="152" frameborder="0" allowfullscreen=""
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
+
 </div>
 </body>
 </html>
