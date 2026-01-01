@@ -1,162 +1,152 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DERITMZX • Hacker Zone</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>deritmzx • Red Demon</title>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-    font-family:'Poppins',sans-serif;
-    background:#000;
-    color:#fff;
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    overflow:hidden;
-    animation:fadeIn 1.2s ease-in-out;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; font-family: "Poppins", sans-serif; background: #000; color: #fff; }
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
 }
 
-/* Fade in animation */
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-
-/* Matrix Hacker Rain Background */
-.matrix {
-    position:fixed;
-    top:0;left:0;
-    width:100%;height:100%;
-    z-index:-3;
-    background:#000;
-    overflow:hidden;
+/* Avatar */
+.avatar-box {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: 4px solid #ff002f;
+  box-shadow: 0 0 24px #ff002f;
+  animation: pulse 2.8s infinite;
 }
-.matrix span {
-    position:absolute;
-    top:-10%;
-    width:100%;
-    font-size:18px;
-    color:#00ff55;
-    opacity:.6;
-    white-space:nowrap;
-    animation:rain 1.2s linear infinite;
-}
-@keyframes rain {
-    from { transform: translateY(-100%); }
-    to   { transform: translateY(200%); }
+.avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+@keyframes pulse {
+  0% { box-shadow: 0 0 18px #ff002f; }
+  50% { box-shadow: 0 0 36px #ff002f; }
+  100% { box-shadow: 0 0 18px #ff002f; }
 }
 
-/* Title glitch */
+/* Name + Bio */
 h1 {
-    font-size:3.2rem;
-    font-weight:800;
-    text-shadow:0 0 12px #00ff55, 0 0 25px #00ff55;
-    animation:glitch 2s infinite;
+  font-size: 2.6rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px #ff002f;
+  margin-bottom: 6px;
 }
-@keyframes glitch {
-    0% { opacity:1; text-shadow:0 0 10px #00ff55; }
-    50%{ opacity:.8; text-shadow:0 0 22px #00ff55; }
-    100%{ opacity:1; text-shadow:0 0 10px #00ff55; }
-}
-
-/* Description */
-p { opacity:.7; margin-bottom:18px; }
-
-/* Buttons */
-.btn {
-    text-decoration:none;
-    background:rgba(255,255,255,.1);
-    padding:12px 24px;
-    border-radius:12px;
-    color:white;
-    margin-top:14px;
-    font-size:1.2rem;
-    display:flex;
-    gap:10px;
-    align-items:center;
-    backdrop-filter:blur(6px);
-    transition:.25s;
-}
-.btn:hover {
-    transform:scale(1.1);
-    background:rgba(255,255,255,.25);
+.bio {
+  font-size: 1.1rem;
+  opacity: .75;
+  margin-bottom: 26px;
 }
 
-.icon {
-    width:32px;
-    height:32px;
-    border-radius:6px;
-    object-fit:cover;
+/* Link Buttons */
+.link-btn {
+  width: 92%;
+  max-width: 360px;
+  background: rgba(255, 0, 47, .2);
+  border: 1px solid rgba(255, 0, 47, .4);
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 1.15rem;
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-decoration: none;
+  color: white;
+  transition: .25s;
+  backdrop-filter: blur(6px);
+}
+.link-btn:hover {
+  transform: scale(1.05);
+  background: rgba(255, 0, 47, .32);
+  box-shadow: 0 0 18px #ff002f;
 }
 
 /* Spotify */
-.player {
-    margin-top:25px;
-    width:90%;
-    max-width:480px;
+.spotify-box {
+  width: 92%;
+  max-width: 360px;
+  margin-top: 30px;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
-footer {
-    position:fixed;
-    bottom:10px;
-    opacity:.3;
-    font-size:.8rem;
-    width:100%;
-    text-align:center;
+/* Floating background embers */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at center, rgba(255,0,47,.3), #000 70%);
+}
+.ember {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: #ff002f;
+  border-radius: 50%;
+  opacity: .8;
+  animation: floatUp 4s infinite linear;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh); opacity:.2; }
+  50% { opacity:.9; }
+  100% { transform: translateY(-10vh); opacity:.15; }
 }
 </style>
 </head>
 
 <body>
+<div class="bg"></div>
 
-<!-- Background -->
-<div class="matrix"></div>
-
-<!-- Content -->
-<h1>DERITMZX</h1>
-<p>Welcome to the Hacker Zone</p>
-
-<a class="btn" href="https://www.instagram.com/ducky5.jpeg/" target="_blank">
-  <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg">
-  Instagram: @deritmzx
-</a>
-
-<a class="btn" href="https://www.roblox.com/users/VINANDCAT/profile" target="_blank">
-  <img class="icon" src="https://img2.pic.in.th/c4c28132e4907f73ea0430d18d769c06276e39cc.png">
-  Roblox: VINANDCAT
-</a>
-
-<a class="btn" href="https://discord.com/users/deritmzx" target="_blank">
-  <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png">
-  Discord: deritmzx
-</a>
-
-<!-- Spotify Player -->
-<div class="player">
-<iframe style="border-radius:12px"
-src="https://open.spotify.com/embed/track/3p4hRhMcb6ch8OLtATMaLw?utm_source=generator"
-width="100%" height="152" frameborder="0" allowfullscreen=""
-allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-loading="lazy"></iframe>
-</div>
-
-<footer>© 2026 DERITMZX • Hacker Edition</footer>
-
-<!-- Rain Generator -->
 <script>
-const matrix = document.querySelector('.matrix');
-const chars = "01 10 0011 010 110 001 101 1001 0101 1110 01 010 10 01 ";
-for(let i=0;i<50;i++){
-  let row = document.createElement("span");
-  row.style.left = Math.random()*100 + "%";
-  row.style.animationDelay = Math.random()*1 + "s";
-  row.textContent = chars.repeat(20);
-  matrix.appendChild(row);
+/* Create floating particles */
+for(let i=0;i<40;i++){
+  let d=document.createElement("div");
+  d.className="ember";
+  d.style.left=Math.random()*100+"vw";
+  d.style.animationDelay=Math.random()*4+"s";
+  d.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(d);
 }
 </script>
 
+<div class="container">
+  <!-- Avatar -->
+  <div class="avatar-box">
+    <img src="https://cdn.pic.in.th/file/picinth/fd603867-c305-4545-9fd1-68ee84f9967e.png" alt="profile" />
+  </div>
+
+  <!-- Name -->
+  <h1>deritmzx</h1>
+  <div class="bio">Thailand | 16 | Roblox & Hacker</div>
+
+  <!-- Links -->
+  <a class="link-btn" href="https://instagram.com/ducky5.jpeg" target="_blank">Instagram</a>
+  <a class="link-btn" href="https://www.roblox.com/users/8183436850/profile" target="_blank">Roblox Profile</a>
+  <a class="link-btn" href="https://discordapp.com/users/848073028474765332" target="_blank">Discord</a>
+
+  <!-- Spotify -->
+  <div class="spotify-box">
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3p4hRhMcb6ch8OLtATMaLw?utm_source=generator"
+      width="100%" height="152" frameborder="0" allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+</div>
 </body>
 </html>
