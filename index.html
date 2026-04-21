@@ -19,7 +19,7 @@
         color: var(--primary);
         font-family: 'Fira Code', monospace;
         overflow-x: hidden;
-        height: 100vh;
+        min-height: 100vh;
     }
 
     /* 📺 CRT SCANLINE */
@@ -53,29 +53,22 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        padding: 20px;
+        padding: 40px 20px;
         z-index: 10;
     }
 
-    /* 💀 FIXED AVATAR */
     .avatar {
         width: 180px; height: 180px;
         border: 3px solid var(--primary);
         box-shadow: 0 0 25px var(--glow);
         margin-bottom: 20px;
         background: #000;
-        position: relative;
     }
 
-    /* ใช้ Direct Link ที่บอสให้มา */
-    .avatar img { 
-        width: 100%; height: 100%; 
-        object-fit: cover; 
-        display: block;
-    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
 
     .glitch-title {
-        font-size: 3.5rem;
+        font-size: clamp(2rem, 8vw, 3.5rem);
         font-weight: 900;
         text-transform: uppercase;
         color: #fff;
@@ -118,30 +111,59 @@
     .full-width { grid-column: span 2; }
     .server-btn { background: #fff; color: #000; font-weight: 900; border: none; }
 
-    /* 🎵 HACKER AUDIO PLAYER */
-    .music-player {
-        margin-top: 30px;
-        width: 100%;
-        max-width: 500px;
-        border: 1px solid var(--primary);
-        padding: 15px;
-        background: rgba(0,0,0,0.9);
-        text-align: center;
+    /* 🛠 BACKEND UI (ADMIN PANEL) */
+    #admin-panel {
+        display: none;
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: #111;
+        border: 2px solid var(--primary);
+        padding: 20px;
+        z-index: 1000;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 0 50px #000;
     }
 
-    .play-btn {
+    #admin-panel input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #000;
+        border: 1px solid var(--primary);
+        color: #fff;
+        font-family: 'Fira Code', sans-serif;
+    }
+
+    .admin-btn {
+        width: 100%;
+        padding: 10px;
         background: var(--primary);
         color: #000;
         border: none;
-        padding: 10px 20px;
-        font-family: 'Fira Code', monospace;
         font-weight: bold;
         cursor: pointer;
-        width: 100%;
-        text-transform: uppercase;
     }
 
-    .play-btn:active { transform: scale(0.98); }
+    .close-admin {
+        color: #ff0000;
+        float: right;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    /* Secret Login Trigger */
+    #login-trigger {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        opacity: 0.05;
+        z-index: 999;
+    }
+
 </style>
 </head>
 <body>
@@ -149,81 +171,118 @@
 <canvas id="matrix"></canvas>
 <div id="cursor-glow"></div>
 
+<div id="login-trigger" onclick="askPassword()"></div>
+
 <div class="container">
     <div class="avatar">
-        <img src="https://img1.pic.in.th/images/77706ead-4010-496c-9b6c-7521e38d8bf2.png" alt="DERITMZX">
+        <img id="display-avatar" src="https://img1.pic.in.th/images/77706ead-4010-496c-9b6c-7521e38d8bf2.png">
     </div>
-
     <h1 class="glitch-title">DERITMZX</h1>
     <div class="status-bar">ACCESS GRANTED: GRADE 10 STUDENT // THAILAND</div>
     
-    <div class="links-grid">
-        <a href="https://instagram.com/ducky5.jpeg" class="link-card" target="_blank">Instagram</a>
-        <a href="https://www.roblox.com/users/8183436850/profile" class="link-card" target="_blank">Roblox</a>
-        <a href="https://discordapp.com/users/848073028474765332" class="link-card full-width" target="_blank">Discord Protocol</a>
-        
-        <a href="https://www.roblox.com/share?code=eef4a88a1144294b80e110db7277e5df&type=Server" class="link-card server-btn" target="_blank">TSB SERVER</a>
-        <a href="https://www.roblox.com/share?code=0d8cefa1f410574aaa839b2d1edae0bc&type=Server" class="link-card server-btn" target="_blank">SALIOR PIECE 🔥</a>
-        
-        <a href="https://easydonate.app/fxlzry_" class="link-card full-width" target="_blank">DONATE / SUPPORT</a>
-    </div>
+    <div class="links-grid" id="links-container">
+        </div>
+</div>
 
-    <div class="music-player">
-        <div style="font-size: 0.7rem; margin-bottom: 10px;">> EXECUTE_AUDIO_FILE.mp3</div>
-        <button class="play-btn" id="audioControl">Play Music</button>
-        <audio id="bgMusic" loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        </audio>
-    </div>
+<div id="admin-panel">
+    <span class="close-admin" onclick="closeAdmin()">[CLOSE]</span>
+    <h3>ADMIN BACKEND</h3>
+    <p style="font-size: 0.7rem; margin-bottom: 10px;">Edit your links below:</p>
+    <label>Instagram URL:</label>
+    <input type="text" id="edit-ig">
+    <label>Roblox Profile:</label>
+    <input type="text" id="edit-roblox">
+    <label>Discord ID Link:</label>
+    <input type="text" id="edit-discord">
+    <label>TSB Server Link:</label>
+    <input type="text" id="edit-tsb">
+    <label>Sailor Piece Link:</label>
+    <input type="text" id="edit-sailor">
+    <button class="admin-btn" onclick="saveData()">SAVE CHANGES</button>
 </div>
 
 <script>
-    // 💾 MATRIX BACKGROUND
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const characters = "01";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
+    // --- ระบบจัดการข้อมูล ---
+    const PASS = "24juuhh2";
+    let defaultData = {
+        ig: "https://instagram.com/ducky5.jpeg",
+        roblox: "https://www.roblox.com/users/8183436850/profile",
+        discord: "https://discordapp.com/users/848073028474765332",
+        tsb: "https://www.roblox.com/share?code=eef4a88a1144294b80e110db7277e5df&type=Server",
+        sailor: "https://www.roblox.com/share?code=0d8cefa1f410574aaa839b2d1edae0bc&type=Server"
+    };
 
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#ff0000";
-        ctx.font = fontSize + "px monospace";
-        for (let i = 0; i < drops.length; i++) {
-            const text = characters.charAt(Math.floor(Math.random() * characters.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
+    // โหลดข้อมูลจาก Memory
+    let currentData = JSON.parse(localStorage.getItem('mySiteData')) || defaultData;
+
+    function renderLinks() {
+        const container = document.getElementById('links-container');
+        container.innerHTML = `
+            <a href="${currentData.ig}" class="link-card" target="_blank">Instagram</a>
+            <a href="${currentData.roblox}" class="link-card" target="_blank">Roblox</a>
+            <a href="${currentData.discord}" class="link-card full-width" target="_blank">Discord Protocol</a>
+            <a href="${currentData.tsb}" class="link-card server-btn" target="_blank">TSB SERVER</a>
+            <a href="${currentData.sailor}" class="link-card server-btn" target="_blank">SALIOR PIECE 🔥</a>
+            <a href="https://easydonate.app/fxlzry_" class="link-card full-width" target="_blank">DONATE / SUPPORT</a>
+        `;
+    }
+
+    function askPassword() {
+        let input = prompt("ENTER ACCESS KEY:");
+        if (input === PASS) {
+            openAdmin();
+        } else {
+            alert("ACCESS DENIED.");
         }
     }
-    setInterval(drawMatrix, 50);
 
-    // 🖱️ MOUSE GLOW
-    const cursorGlow = document.getElementById('cursor-glow');
+    function openAdmin() {
+        document.getElementById('admin-panel').style.display = 'block';
+        document.getElementById('edit-ig').value = currentData.ig;
+        document.getElementById('edit-roblox').value = currentData.roblox;
+        document.getElementById('edit-discord').value = currentData.discord;
+        document.getElementById('edit-tsb').value = currentData.tsb;
+        document.getElementById('edit-sailor').value = currentData.sailor;
+    }
+
+    function closeAdmin() {
+        document.getElementById('admin-panel').style.display = 'none';
+    }
+
+    function saveData() {
+        currentData.ig = document.getElementById('edit-ig').value;
+        currentData.roblox = document.getElementById('edit-roblox').value;
+        currentData.discord = document.getElementById('edit-discord').value;
+        currentData.tsb = document.getElementById('edit-tsb').value;
+        currentData.sailor = document.getElementById('edit-sailor').value;
+        
+        localStorage.setItem('mySiteData', JSON.stringify(currentData));
+        renderLinks();
+        alert("SYSTEM UPDATED.");
+        closeAdmin();
+    }
+
+    renderLinks();
+
+    // --- Matrix & Effect (เหมือนต้นฉบับ) ---
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const drops = Array(Math.floor(canvas.width/16)).fill(1);
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#ff0000"; ctx.font = "16px monospace";
+        drops.forEach((y, i) => {
+            ctx.fillText("01".charAt(Math.random()*2), i*16, y*16);
+            if (y*16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+    setInterval(draw, 50);
     document.addEventListener('mousemove', e => {
-        cursorGlow.style.left = e.clientX + 'px';
-        cursorGlow.style.top = e.clientY + 'px';
-    });
-
-    // 🎵 AUDIO CONTROL
-    const audio = document.getElementById('bgMusic');
-    const btn = document.getElementById('audioControl');
-    btn.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-            btn.innerText = "Stop Music";
-            btn.style.background = "#fff";
-        } else {
-            audio.pause();
-            btn.innerText = "Play Music";
-            btn.style.background = "#ff0000";
-        }
+        const g = document.getElementById('cursor-glow');
+        g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px';
     });
 </script>
-
 </body>
 </html>
