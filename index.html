@@ -55,18 +55,26 @@
         min-height: 100vh;
         padding: 40px 20px;
         z-index: 10;
+        position: relative;
     }
 
+    /* 💀 AVATAR */
     .avatar {
         width: 180px; height: 180px;
         border: 3px solid var(--primary);
         box-shadow: 0 0 25px var(--glow);
         margin-bottom: 20px;
         background: #000;
+        position: relative;
     }
 
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar img { 
+        width: 100%; height: 100%; 
+        object-fit: cover; 
+        display: block;
+    }
 
+    /* 💻 MAIN UI ELEMENTS */
     .glitch-title {
         font-size: clamp(2rem, 8vw, 3.5rem);
         font-weight: 900;
@@ -80,9 +88,39 @@
         color: #000;
         padding: 2px 10px;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
+        text-align: center;
     }
 
+    /* 📊 VISITS/CLICKS BAR with [ADMIN] */
+    .stats-bar {
+        display: flex;
+        gap: 10px;
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+    }
+
+    .stat-box {
+        border: 1px solid var(--primary);
+        padding: 2px 10px;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .admin-trigger {
+        background: #000;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        cursor: pointer;
+        padding: 2px 10px;
+        transition: 0.3s;
+    }
+
+    .admin-trigger:hover {
+        background: var(--primary);
+        color: #000;
+    }
+
+    /* 🔗 LINKS GRID */
     .links-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -100,6 +138,7 @@
         text-align: center;
         transition: 0.3s;
         text-transform: uppercase;
+        position: relative;
     }
 
     .link-card:hover {
@@ -111,59 +150,100 @@
     .full-width { grid-column: span 2; }
     .server-btn { background: #fff; color: #000; font-weight: 900; border: none; }
 
-    /* 🛠 BACKEND UI (ADMIN PANEL) */
+    /* 🎵 AUDIO PLAYER */
+    .music-player {
+        margin-top: 30px;
+        width: 100%;
+        max-width: 500px;
+        border: 1px solid var(--primary);
+        padding: 15px;
+        background: rgba(0,0,0,0.9);
+        text-align: center;
+    }
+
+    .play-btn {
+        background: var(--primary);
+        color: #000;
+        border: none;
+        padding: 10px 20px;
+        font-family: 'Fira Code', monospace;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        text-transform: uppercase;
+    }
+
+    /* 🛠 ADMIN PANEL OVERLAY (Style based on image_1.png) */
     #admin-panel {
         display: none;
         position: fixed;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        background: #111;
-        border: 2px solid var(--primary);
-        padding: 20px;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: #000;
         z-index: 1000;
-        width: 90%;
-        max-width: 400px;
-        box-shadow: 0 0 50px #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
-    #admin-panel input {
-        width: 100%;
-        padding: 10px;
+    .admin-title {
+        color: #fff;
+        font-size: 3rem;
+        font-weight: 900;
+        text-shadow: 2px 2px #ff0000;
         margin-bottom: 10px;
+    }
+
+    .admin-subtitle {
+        color: #000;
+        background: var(--primary);
+        font-weight: bold;
+        padding: 2px 15px;
+        margin-bottom: 30px;
+    }
+
+    .auth-form {
+        border: 2px solid var(--primary);
+        padding: 25px;
+        width: 90%;
+        max-width: 500px;
+        text-align: left;
+    }
+
+    #password-input {
+        width: 100%;
+        padding: 12px;
         background: #000;
         border: 1px solid var(--primary);
         color: #fff;
-        font-family: 'Fira Code', sans-serif;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
     }
 
     .admin-btn {
         width: 100%;
-        padding: 10px;
-        background: var(--primary);
-        color: #000;
-        border: none;
+        padding: 12px;
         font-weight: bold;
+        border: none;
         cursor: pointer;
+        font-family: 'Fira Code', monospace;
     }
 
-    .close-admin {
-        color: #ff0000;
-        float: right;
-        cursor: pointer;
+    .access-btn {
+        background: var(--primary);
+        color: #000;
         margin-bottom: 10px;
     }
 
-    /* Secret Login Trigger */
-    #login-trigger {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        width: 20px;
-        height: 20px;
-        opacity: 0.05;
-        z-index: 999;
+    .back-btn {
+        background: #000;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        margin-top: 10px;
+        width: auto;
+        padding: 8px 15px;
     }
-
 </style>
 </head>
 <body>
@@ -171,40 +251,54 @@
 <canvas id="matrix"></canvas>
 <div id="cursor-glow"></div>
 
-<div id="login-trigger" onclick="askPassword()"></div>
-
 <div class="container">
     <div class="avatar">
         <img id="display-avatar" src="https://img1.pic.in.th/images/77706ead-4010-496c-9b6c-7521e38d8bf2.png">
     </div>
+
     <h1 class="glitch-title">DERITMZX</h1>
     <div class="status-bar">ACCESS GRANTED: GRADE 10 STUDENT // THAILAND</div>
     
-    <div class="links-grid" id="links-container">
-        </div>
+    <div class="stats-bar">
+        <div class="stat-box">VISITS: 11</div>
+        <div class="stat-box">CLICKS: 2</div>
+        <div class="admin-trigger" onclick="openAdminPanel()">[ADMIN]</div>
+    </div>
+    
+    <div class="links-grid">
+        <a href="https://instagram.com/ducky5.jpeg" class="link-card" target="_blank">Instagram</a>
+        <a href="https://www.roblox.com/users/8183436850/profile" class="link-card" target="_blank">Roblox</a>
+        <a href="https://discordapp.com/users/848073028474765332" class="link-card full-width" target="_blank">Discord Protocol</a>
+        <a href="https://www.roblox.com/share?code=eef4a88a1144294b80e110db7277e5df&type=Server" class="link-card server-btn" target="_blank">TSB SERVER</a>
+        <a href="https://www.roblox.com/share?code=0d8cefa1f410574aaa839b2d1edae0bc&type=Server" class="link-card server-btn" target="_blank">SALIOR PIECE 🔥</a>
+        <a href="https://easydonate.app/fxlzry_" class="link-card full-width" target="_blank">DONATE / SUPPORT</a>
+    </div>
+
+    <div class="music-player">
+        <div style="font-size: 0.7rem; margin-bottom: 10px;">> EXECUTE_AUDIO_FILE.mp3</div>
+        <button class="play-btn" id="audioControl">Play Music</button>
+        <audio id="bgMusic" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 </div>
 
 <div id="admin-panel">
-    <span class="close-admin" onclick="closeAdmin()">[CLOSE]</span>
-    <h3>ADMIN BACKEND</h3>
-    <p style="font-size: 0.7rem; margin-bottom: 10px;">Edit your links below:</p>
-    <label>Instagram URL:</label>
-    <input type="text" id="edit-ig">
-    <label>Roblox Profile:</label>
-    <input type="text" id="edit-roblox">
-    <label>Discord ID Link:</label>
-    <input type="text" id="edit-discord">
-    <label>TSB Server Link:</label>
-    <input type="text" id="edit-tsb">
-    <label>Sailor Piece Link:</label>
-    <input type="text" id="edit-sailor">
-    <button class="admin-btn" onclick="saveData()">SAVE CHANGES</button>
+    <h1 class="admin-title">ADMIN</h1>
+    <div class="admin-subtitle">SECURE TERMINAL // EDIT MODE</div>
+    
+    <div class="auth-form">
+        <div style="font-size: 0.7rem; color: #ff0000; margin-bottom: 10px;">> AUTHENTICATE.exe</div>
+        <input type="password" id="password-input" placeholder="ENTER PASSWORD">
+        <button class="admin-btn access-btn" onclick="checkPassword()">ACCESS</button>
+        <button class="admin-btn back-btn" onclick="closeAdminPanel()"> < BACK</button>
+    </div>
 </div>
 
 <script>
     // --- ระบบจัดการข้อมูล ---
-    const PASS = "24juuhh2";
-    let defaultData = {
+    const ADMIN_PASS = "24juuhh2"; // รหัสผ่านเข้าหลังบ้าน
+    let currentData = {
         ig: "https://instagram.com/ducky5.jpeg",
         roblox: "https://www.roblox.com/users/8183436850/profile",
         discord: "https://discordapp.com/users/848073028474765332",
@@ -212,76 +306,76 @@
         sailor: "https://www.roblox.com/share?code=0d8cefa1f410574aaa839b2d1edae0bc&type=Server"
     };
 
-    // โหลดข้อมูลจาก Memory
-    let currentData = JSON.parse(localStorage.getItem('mySiteData')) || defaultData;
+    // --- ฟังก์ชัน ADMIN ---
+    const panel = document.getElementById('admin-panel');
+    const input = document.getElementById('password-input');
 
-    function renderLinks() {
-        const container = document.getElementById('links-container');
-        container.innerHTML = `
-            <a href="${currentData.ig}" class="link-card" target="_blank">Instagram</a>
-            <a href="${currentData.roblox}" class="link-card" target="_blank">Roblox</a>
-            <a href="${currentData.discord}" class="link-card full-width" target="_blank">Discord Protocol</a>
-            <a href="${currentData.tsb}" class="link-card server-btn" target="_blank">TSB SERVER</a>
-            <a href="${currentData.sailor}" class="link-card server-btn" target="_blank">SALIOR PIECE 🔥</a>
-            <a href="https://easydonate.app/fxlzry_" class="link-card full-width" target="_blank">DONATE / SUPPORT</a>
-        `;
+    function openAdminPanel() {
+        panel.style.display = 'flex'; // แสดงหน้าหลังบ้าน
+        input.value = ""; // ล้างช่องรหัส
+        input.focus();
     }
 
-    function askPassword() {
-        let input = prompt("ENTER ACCESS KEY:");
-        if (input === PASS) {
-            openAdmin();
+    function closeAdminPanel() {
+        panel.style.display = 'none'; // ซ่อนหน้าหลังบ้าน
+    }
+
+    function checkPassword() {
+        if (input.value === ADMIN_PASS) {
+            // ถ้ารหัสถูก ให้เปิดหน้าแก้ไข
+            openDashboard(); 
         } else {
             alert("ACCESS DENIED.");
+            input.value = "";
         }
     }
 
-    function openAdmin() {
-        document.getElementById('admin-panel').style.display = 'block';
-        document.getElementById('edit-ig').value = currentData.ig;
-        document.getElementById('edit-roblox').value = currentData.roblox;
-        document.getElementById('edit-discord').value = currentData.discord;
-        document.getElementById('edit-tsb').value = currentData.tsb;
-        document.getElementById('edit-sailor').value = currentData.sailor;
+    // ฟังก์ชันนี้จะทำงานถ้ารหัสถูก (คุณต้องสร้างหน้า Dashboard เพิ่มในอนาคต)
+    function openDashboard() {
+        alert("ACCESS GRANTED. (You need to build the dashboard page)");
+        // ตัวอย่าง: โหลดข้อมูล Instagram เดิมเข้าไปแก้
+        let newIG = prompt("New Instagram URL:", currentData.ig);
+        if(newIG) {
+            currentData.ig = newIG;
+            alert("Updated! (Note: Since this is just client-side JS, it will reset on reload. You need a real database for persistent saving.)");
+        }
+        closeAdminPanel();
     }
 
-    function closeAdmin() {
-        document.getElementById('admin-panel').style.display = 'none';
-    }
-
-    function saveData() {
-        currentData.ig = document.getElementById('edit-ig').value;
-        currentData.roblox = document.getElementById('edit-roblox').value;
-        currentData.discord = document.getElementById('edit-discord').value;
-        currentData.tsb = document.getElementById('edit-tsb').value;
-        currentData.sailor = document.getElementById('edit-sailor').value;
-        
-        localStorage.setItem('mySiteData', JSON.stringify(currentData));
-        renderLinks();
-        alert("SYSTEM UPDATED.");
-        closeAdmin();
-    }
-
-    renderLinks();
+    // รองรับการกด Enter เพื่อล็อคอิน
+    input.addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+            checkPassword();
+        }
+    });
 
     // --- Matrix & Effect (เหมือนต้นฉบับ) ---
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const drops = Array(Math.floor(canvas.width/16)).fill(1);
+    const characters = "01";
+    const fontSize = 16;
+    const drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
     function draw() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#ff0000"; ctx.font = "16px monospace";
-        drops.forEach((y, i) => {
-            ctx.fillText("01".charAt(Math.random()*2), i*16, y*16);
-            if (y*16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        ctx.fillStyle = "#ff0000"; ctx.font = fontSize + "px monospace";
+        for (let i = 0; i < drops.length; i++) {
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
             drops[i]++;
-        });
+        }
     }
     setInterval(draw, 50);
     document.addEventListener('mousemove', e => {
-        const g = document.getElementById('cursor-glow');
-        g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px';
+        const glow = document.getElementById('cursor-glow');
+        glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
+    });
+    const audio = document.getElementById('bgMusic');
+    const btn = document.getElementById('audioControl');
+    btn.addEventListener('click', () => {
+        if (audio.paused) { audio.play(); btn.innerText = "Stop Music"; btn.style.background = "#fff";
+        } else { audio.pause(); btn.innerText = "Play Music"; btn.style.background = "#ff0000"; }
     });
 </script>
 </body>
