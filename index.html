@@ -1,219 +1,457 @@
 <!DOCTYPE html>
+
 <html lang="th">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SYSTEM OVERRIDE • DERITMZX</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
+
     :root {
+
         --primary: #ff0000;
+
         --bg: #050505;
+
         --glow: rgba(255, 0, 0, 0.6);
+
     }
+
+
 
     * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
+
+
     body {
+
         background: var(--bg);
+
         color: var(--primary);
+
         font-family: 'Fira Code', monospace;
+
         overflow-x: hidden;
-        min-height: 100vh;
+
+        height: 100vh;
+
     }
 
+
+
     /* 📺 CRT SCANLINE */
+
     body::before {
-        content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+
+        content: " ";
+
+        display: block;
+
+        position: fixed;
+
+        top: 0; left: 0; bottom: 0; right: 0;
+
         background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+
                     linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-        z-index: 100; background-size: 100% 2px, 3px 100%; pointer-events: none;
+
+        z-index: 100;
+
+        background-size: 100% 2px, 3px 100%;
+
+        pointer-events: none;
+
     }
+
+
 
     canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
 
+
+
     #cursor-glow {
-        position: fixed; width: 150px; height: 150px; border-radius: 50%;
+
+        position: fixed;
+
+        width: 150px; height: 150px;
+
+        border-radius: 50%;
+
         background: radial-gradient(circle, var(--glow) 0%, rgba(255,0,0,0) 70%);
-        pointer-events: none; transform: translate(-50%, -50%); z-index: 50;
+
+        pointer-events: none;
+
+        transform: translate(-50%, -50%);
+
+        z-index: 50;
+
     }
 
-    /* 🏠 MAIN UI */
+
+
     .container {
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        min-height: 100vh; padding: 40px 20px; z-index: 10;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 100vh;
+
+        padding: 20px;
+
+        z-index: 10;
+
     }
 
-    .avatar { width: 180px; height: 180px; border: 3px solid var(--primary); box-shadow: 0 0 25px var(--glow); margin-bottom: 20px; }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    .glitch-title { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 900; color: #fff; text-shadow: 2px 2px var(--primary); }
-    .status-bar { background: var(--primary); color: #000; padding: 2px 10px; font-weight: bold; margin-bottom: 10px; }
 
-    .stats-row { display: flex; gap: 10px; margin-bottom: 20px; }
-    .stat-item { border: 1px solid var(--primary); padding: 2px 12px; font-size: 0.8rem; }
-    .admin-trigger { border: 1px solid var(--primary); padding: 2px 12px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
-    .admin-trigger:hover { background: var(--primary); color: #000; }
+    /* 💀 FIXED AVATAR */
 
-    .links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 500px; }
-    .link-card { padding: 15px; background: rgba(255, 0, 0, 0.1); border: 1px solid var(--primary); text-decoration: none; color: var(--primary); text-align: center; transition: 0.3s; text-transform: uppercase; }
-    .link-card:hover { background: var(--primary); color: #000; box-shadow: 0 0 30px var(--primary); }
+    .avatar {
+
+        width: 180px; height: 180px;
+
+        border: 3px solid var(--primary);
+
+        box-shadow: 0 0 25px var(--glow);
+
+        margin-bottom: 20px;
+
+        background: #000;
+
+        position: relative;
+
+    }
+
+
+
+    /* ใช้ Direct Link ที่บอสให้มา */
+
+    .avatar img { 
+
+        width: 100%; height: 100%; 
+
+        object-fit: cover; 
+
+        display: block;
+
+    }
+
+
+
+    .glitch-title {
+
+        font-size: 3.5rem;
+
+        font-weight: 900;
+
+        text-transform: uppercase;
+
+        color: #fff;
+
+        text-shadow: 2px 2px var(--primary);
+
+    }
+
+
+
+    .status-bar {
+
+        background: var(--primary);
+
+        color: #000;
+
+        padding: 2px 10px;
+
+        font-weight: bold;
+
+        margin-bottom: 20px;
+
+    }
+
+
+
+    .links-grid {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 15px;
+
+        width: 100%;
+
+        max-width: 500px;
+
+    }
+
+
+
+    .link-card {
+
+        padding: 15px;
+
+        background: rgba(255, 0, 0, 0.1);
+
+        border: 1px solid var(--primary);
+
+        text-decoration: none;
+
+        color: var(--primary);
+
+        text-align: center;
+
+        transition: 0.3s;
+
+        text-transform: uppercase;
+
+    }
+
+
+
+    .link-card:hover {
+
+        background: var(--primary);
+
+        color: #000;
+
+        box-shadow: 0 0 30px var(--primary);
+
+    }
+
+
+
     .full-width { grid-column: span 2; }
-    .server-style { background: #fff; color: #000; font-weight: 900; border: none; }
 
-    /* 🛠 ADMIN OVERLAY */
-    #admin-overlay {
-        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: #000; z-index: 1000; overflow-y: auto; padding: 50px 20px;
-        flex-direction: column; align-items: center;
+    .server-btn { background: #fff; color: #000; font-weight: 900; border: none; }
+
+
+
+    /* 🎵 HACKER AUDIO PLAYER */
+
+    .music-player {
+
+        margin-top: 30px;
+
+        width: 100%;
+
+        max-width: 500px;
+
+        border: 1px solid var(--primary);
+
+        padding: 15px;
+
+        background: rgba(0,0,0,0.9);
+
+        text-align: center;
+
     }
 
-    .admin-header { text-align: center; margin-bottom: 30px; }
-    .admin-header h1 { font-size: 3rem; color: #fff; text-shadow: 2px 2px red; }
-    .admin-header div { background: red; color: #000; padding: 2px 20px; font-weight: bold; }
 
-    .auth-container { border: 1px solid red; padding: 30px; width: 100%; max-width: 500px; margin-top: 50px; }
-    .dashboard-container { display: none; width: 100%; max-width: 600px; border: 1px solid red; padding: 20px; }
 
-    .edit-box { border: 1px dashed #600; padding: 15px; margin-bottom: 20px; }
-    .label-tag { font-size: 0.7rem; color: #f00; margin-bottom: 5px; }
-    
-    input { 
-        width: 100%; background: #000; border: 1px solid #600; color: #fff; 
-        padding: 10px; font-family: 'Fira Code'; margin-bottom: 10px; outline: none;
+    .play-btn {
+
+        background: var(--primary);
+
+        color: #000;
+
+        border: none;
+
+        padding: 10px 20px;
+
+        font-family: 'Fira Code', monospace;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        width: 100%;
+
+        text-transform: uppercase;
+
     }
-    input:focus { border-color: red; }
 
-    .save-btn { background: #b00; color: #fff; border: none; width: 100%; padding: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-    .save-btn:hover { background: red; }
 
-    .logout-btn { float: right; border: 1px solid red; color: red; padding: 2px 10px; font-size: 0.6rem; cursor: pointer; text-decoration: none; }
+
+    .play-btn:active { transform: scale(0.98); }
+
 </style>
+
 </head>
+
 <body>
 
+
+
 <canvas id="matrix"></canvas>
+
 <div id="cursor-glow"></div>
 
-<div class="container" id="main-site">
-    <div class="avatar"><img src="https://img1.pic.in.th/images/77706ead-4010-496c-9b6c-7521e38d8bf2.png"></div>
+
+
+<div class="container">
+
+    <div class="avatar">
+
+        <img src="https://img1.pic.in.th/images/77706ead-4010-496c-9b6c-7521e38d8bf2.png" alt="DERITMZX">
+
+    </div>
+
+
+
     <h1 class="glitch-title">DERITMZX</h1>
+
     <div class="status-bar">ACCESS GRANTED: GRADE 10 STUDENT // THAILAND</div>
-    <div class="stats-row">
-        <div class="stat-item">VISITS: 11</div>
-        <div class="stat-item">CLICKS: 2</div>
-        <div class="admin-trigger" onclick="toggleAdmin(true)">[ADMIN]</div>
+
+    
+
+    <div class="links-grid">
+
+        <a href="https://instagram.com/ducky5.jpeg" class="link-card" target="_blank">Instagram</a>
+
+        <a href="https://www.roblox.com/users/8183436850/profile" class="link-card" target="_blank">Roblox</a>
+
+        <a href="https://discordapp.com/users/848073028474765332" class="link-card full-width" target="_blank">Discord Protocol</a>
+
+        
+
+        <a href="https://www.roblox.com/share?code=79672312e0d6a14e8d545163d40be5e1&type=Server" class="link-card server-btn" target="_blank">TSB SERVER</a>
+
+        <a href="https://www.roblox.com/share?code=0d8cefa1f410574aaa839b2d1edae0bc&type=Server" class="link-card server-btn" target="_blank">SALIOR PIECE 🔥</a>
+
+        
+
+        <a href="https://easydonate.app/fxlzry_" class="link-card full-width" target="_blank">DONATE / SUPPORT</a>
+
     </div>
-    <div class="links-grid" id="link-renderer"></div>
+
+
+
+    <div class="music-player">
+
+        <div style="font-size: 0.7rem; margin-bottom: 10px;">> EXECUTE_AUDIO_FILE.mp3</div>
+
+        <button class="play-btn" id="audioControl">Play Music</button>
+
+        <audio id="bgMusic" loop>
+
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+
+        </audio>
+
+    </div>
+
 </div>
 
-<div id="admin-overlay">
-    <div class="admin-header">
-        <h1>ADMIN</h1>
-        <div>SECURE TERMINAL // EDIT MODE</div>
-    </div>
 
-    <div id="auth-section" class="auth-container">
-        <div style="font-size: 0.7rem; margin-bottom: 10px;">> AUTHENTICATE.exe</div>
-        <input type="password" id="admin-pass" placeholder="ENTER PASSWORD">
-        <button class="save-btn" onclick="checkAuth()">ACCESS</button>
-        <div style="text-align: center; margin-top: 15px; font-size: 0.8rem; cursor: pointer;" onclick="toggleAdmin(false)">< BACK</div>
-    </div>
-
-    <div id="dashboard-section" class="dashboard-container">
-        <div style="overflow: hidden; margin-bottom: 20px;">
-            <span style="font-size: 0.7rem;">> LINK_MATRIX.dat</span>
-            <span class="logout-btn" onclick="location.reload()">LOGOUT</span>
-        </div>
-
-        <div id="editor-list"></div>
-
-        <button class="admin-trigger" style="width: 100%; margin-top: 20px; padding: 10px;" onclick="toggleAdmin(false)">< BACK TO SITE</button>
-    </div>
-</div>
 
 <script>
-    const PASSWORD = "24juuhh2";
 
-    // ข้อมูลเริ่มต้น
-    let db = JSON.parse(localStorage.getItem('deritmzx_v2')) || [
-        { id: 0, label: "Instagram", url: "https://instagram.com/ducky5.jpeg", type: "normal" },
-        { id: 1, label: "Roblox", url: "https://www.roblox.com/users/8183436850/profile", type: "normal" },
-        { id: 2, label: "Discord Protocol", url: "https://discordapp.com/users/848073028474765332", type: "full" },
-        { id: 3, label: "TSB SERVER", url: "https://www.roblox.com/share?code=eef4a88a1144294b80e110db7277e5df&type=Server", type: "server" },
-        { id: 4, label: "SALIOR PIECE 🔥", url: "https://www.roblox.com/share?code=0d8cefa1f410574aaa839b2d1edae0bc&type=Server", type: "server" },
-        { id: 5, label: "DONATE / SUPPORT", url: "https://easydonate.app/fxlzry_", type: "full" }
-    ];
+    // 💾 MATRIX BACKGROUND
 
-    function toggleAdmin(show) {
-        document.getElementById('admin-overlay').style.display = show ? 'flex' : 'none';
-        if(!show) {
-            document.getElementById('auth-section').style.display = 'block';
-            document.getElementById('dashboard-section').style.display = 'none';
-            document.getElementById('admin-pass').value = "";
-        }
-    }
+    const canvas = document.getElementById('matrix');
 
-    function checkAuth() {
-        if(document.getElementById('admin-pass').value === PASSWORD) {
-            document.getElementById('auth-section').style.display = 'none';
-            document.getElementById('dashboard-section').style.display = 'block';
-            renderEditor();
-        } else {
-            alert("ACCESS DENIED");
-        }
-    }
-
-    function renderSite() {
-        const container = document.getElementById('link-renderer');
-        container.innerHTML = db.map(link => `
-            <a href="${link.url}" class="link-card ${link.type === 'full' ? 'full-width' : ''} ${link.type === 'server' ? 'server-style' : ''}" target="_blank">
-                ${link.label}
-            </a>
-        `).join('');
-    }
-
-    function renderEditor() {
-        const container = document.getElementById('editor-list');
-        container.innerHTML = db.map((link, index) => `
-            <div class="edit-box">
-                <div class="label-tag">[${link.label.toUpperCase()}]</div>
-                <input type="text" value="${link.label}" id="label-${index}">
-                <input type="text" value="${link.url}" id="url-${index}">
-                <button class="save-btn" onclick="saveLink(${index})">SAVE</button>
-            </div>
-        `).join('');
-    }
-
-    function saveLink(index) {
-        db[index].label = document.getElementById(`label-${index}`).value;
-        db[index].url = document.getElementById(`url-${index}`).value;
-        localStorage.setItem('deritmzx_v2', JSON.stringify(db));
-        renderSite();
-        alert("SYSTEM UPDATED!");
-    }
-
-    // --- Matrix Effect ---
-    const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const drops = Array(Math.floor(canvas.width/16)).fill(1);
-    function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#f00"; ctx.font = "16px monospace";
-        drops.forEach((y, i) => {
-            ctx.fillText(Math.random() > 0.5 ? "0" : "1", i*16, y*16);
-            if (y*16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+
+    canvas.width = window.innerWidth;
+
+    canvas.height = window.innerHeight;
+
+    const characters = "01";
+
+    const fontSize = 16;
+
+    const columns = canvas.width / fontSize;
+
+    const drops = Array(Math.floor(columns)).fill(1);
+
+
+
+    function drawMatrix() {
+
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ff0000";
+
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+
             drops[i]++;
-        });
+
+        }
+
     }
-    setInterval(draw, 50);
+
+    setInterval(drawMatrix, 50);
+
+
+
+    // 🖱️ MOUSE GLOW
+
+    const cursorGlow = document.getElementById('cursor-glow');
+
     document.addEventListener('mousemove', e => {
-        const glow = document.getElementById('cursor-glow');
-        glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
+
+        cursorGlow.style.left = e.clientX + 'px';
+
+        cursorGlow.style.top = e.clientY + 'px';
+
     });
 
-    renderSite();
+
+
+    // 🎵 AUDIO CONTROL
+
+    const audio = document.getElementById('bgMusic');
+
+    const btn = document.getElementById('audioControl');
+
+    btn.addEventListener('click', () => {
+
+        if (audio.paused) {
+
+            audio.play();
+
+            btn.innerText = "Stop Music";
+
+            btn.style.background = "#fff";
+
+        } else {
+
+            audio.pause();
+
+            btn.innerText = "Play Music";
+
+            btn.style.background = "#ff0000";
+
+        }
+
+    });
+
 </script>
+
+
+
 </body>
+
 </html>
